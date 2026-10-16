@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { graphqlRequest } from "@/src/lib/graphqlRequest";
+import { graphqlRequest } from "@/src/libs/graphqlRequest";
 
 // A query GraphQL para puxar 4 produtos do WooCommerce
 const GET_PRODUTOS_DESTAQUE = `
@@ -42,7 +42,8 @@ export default async function Destaques() {
             <div className="border rounded-lg overflow-hidden bg-white hover:shadow-lg transition-shadow">
               {/* Usando a tag img padrão por enquanto para evitar erros de configuração de domínio no Next.js na madrugada */}
               {produto.image?.sourceUrl ? (
-                <Image src={produto.image.sourceUrl} 
+                <Image
+                  src={produto.image.sourceUrl}
                   alt={produto.image.altText || produto.name}
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                   width={250}
@@ -59,7 +60,7 @@ export default async function Destaques() {
                   {produto.name}
                 </h3>
                 <p className="text-lg font-bold mt-2 text-blue-600">
-                  {produto.price}
+                  {produto.price ? produto.price.replace(/&nbsp;/g, ' ') : "Preço sob consulta"}
                 </p>
               </div>
             </div>
